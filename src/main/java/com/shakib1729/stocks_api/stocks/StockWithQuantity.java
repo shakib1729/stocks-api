@@ -5,28 +5,28 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public class StockWithQuantity {
 
-	private String stock;
+	private String symbol;
 
 	private float quantity;
 
-	private double totalAmount;
+	private double investedAmount;
 
 	public StockWithQuantity() {
 	}
 
-	public StockWithQuantity(String stock, float quantity, double totalAmount) {
+	public StockWithQuantity(String symbol, float quantity, double investedAmount) {
 		super();
-		this.stock = stock;
+		this.symbol = symbol;
 		this.quantity = quantity;
-		this.totalAmount = totalAmount;
+		this.investedAmount = investedAmount;
 	}
 
-	public String getStock() {
-		return stock;
+	public String getSymbol() {
+		return symbol;
 	}
 
-	public void setStock(String stock) {
-		this.stock = stock;
+	public void setSymbol(String symbol) {
+		this.symbol = symbol;
 	}
 
 	public float getQuantity() {
@@ -37,17 +37,18 @@ public class StockWithQuantity {
 		this.quantity = quantity;
 	}
 
-	public double getTotalAmount() {
-		return totalAmount;
+	public double getInvestedAmount() {
+		return investedAmount;
 	}
 
-	public void setTotalAmount(double totalAmount) {
-		this.totalAmount = totalAmount;
+	public void setInvestedAmount(double investedAmount) {
+		this.investedAmount = investedAmount;
 	}
 
 	@Override
 	public String toString() {
-		return "StockWithQuantity [stock=" + stock + ", quantity=" + quantity + ", totalAmount=" + totalAmount + "]";
+		return "StockWithQuantity [symbol=" + symbol + ", quantity=" + quantity + ", investedAmount=" + investedAmount
+				+ "]";
 	}
 
 }
