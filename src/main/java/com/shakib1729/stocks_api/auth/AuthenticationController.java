@@ -17,16 +17,25 @@ import jakarta.servlet.http.HttpServletResponse;
 public class AuthenticationController {
 
 	private final AuthenticationService service;
+	private final String DEV_ENVIRONMENT = "DEV";
 
 	@Value("${application.security.jwt.expiration}")
 	private long jwtExpiration;
 
+	@Value("${application.environment}")
+	private String env;
+
 	private String getCookieStringified(String value, long maxAgeSeconds) {
-		ResponseCookie cookie = ResponseCookie.from("jwtToken", value).httpOnly(true).sameSite("Strict").secure(false)
-				.path("/").maxAge(maxAgeSeconds).build();
-//		ResponseCookie cookie = ResponseCookie.from("jwtToken", value).secure(false).path("/").maxAge(maxAgeSeconds)
-//				.build();
-		return cookie.toString();
+
+		// https://stackoverflow.com/a/64384774
+		if (DEV_ENVIRONMENT.equals(env)) {
+			return ResponseCookie.from("jwtToken", value).httpOnly(true).sameSite("Strict").secure(false).path("/")
+					.maxAge(maxAgeSeconds).build().toString();
+		}
+
+		return ResponseCookie.from("jwtToken", value).httpOnly(true).sameSite("None").secure(true).path("/")
+				.maxAge(maxAgeSeconds).build().toString();
+
 	}
 
 	public AuthenticationController(AuthenticationService service) {
